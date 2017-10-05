@@ -4,68 +4,75 @@
 	<title></title>
 </head>
 <body>
-	<div class="col-md-6">
-		<h3>Albany Campus Library</h3><a class="btn" href="http://library.linnbenton.edu/hours#albany" id="albany-hours" style="white-space: normal;margin-bottom:8px;"><span aria-hidden="true" class="fa fa-university"></span> Albany Campus Library</a>
-		<ul>
-			<li>Monday-Thursday 7:30am-9pm</li>
-			<li>Friday 7:30am-5pm</li>
-			<li>Saturday-Sunday 11am-4pm</li>
-		</ul>
-	</div>
-	<div class="col-md-6">
-		<h3>Healthcare Occupations Center Library</h3><a class="btn" href="http://library.linnbenton.edu/hours#hoc" id="hoc-hours" style="white-space: normal;margin-bottom:8px;"><span aria-hidden="true" class="fa fa-stethoscope"></span> Healthcare Occupations Center Library</a>
-		<ul>
-			<li>Monday-Friday 7:30am-4:30pm</li>
-		</ul>
-	</div>
-	<script type="text/javascript">
-	                       function apiUrl(calendarId, apiKey) {
-	                         timeMin = new Date().toISOString();
-	                         return "https://www.googleapis.com/calendar/v3/calendars/" + calendarId + "/events?key=" + apiKey + "&singleEvents=true&orderBy=startTime&timeMin=" + timeMin;
-	                       }
-	                       function sendHoursToBrowser(elementId) {
-	                         return function(response) {
-	                           var events = response.items;
-	                           for (var i = 0; i < events.length; i += 1) {
-	                             if(events[i].end.hasOwnProperty('dateTime')) {
-	                               var start = new Date(events[i].start.dateTime);
-	                               var end = new Date(events[i].end.dateTime);
-	                               var now = new Date();
-	                               if ((end.toDateString() == now.toDateString()) && (now < end)) { // If the day matches and event isn't over
-	                                 if ('library open' == events[i].summary.toLowerCase()) {
-	                                   if (start.getHours() < 12) {
-	                                     var oTimeCiv = start.getHours() + ':' + start.getMinutes() + 'am';
-	                                   } else {
-	                                     var oTimeCiv = (start.getHours() % 12) + ':' + start.getMinutes() + 'pm';
-	                                   }
-	                                 
-	                                   if (end.getHours() < 12) {
-	                                     var cTimeCiv = end.getHours() + ':' + end.getMinutes() + 'am';
-	                                   } else {
-	                                     var cTimeCiv = (end.getHours() % 12) + ':' + end.getMinutes() + 'pm';
-	                                   }
+<div class="col-md-6">
+  <h3>Albany Campus Library</h3>
+  <a class="btn" href="http://library.linnbenton.edu/hours#albany" id="albany-hours" style="white-space: normal;margin-bottom:8px;"><span aria-hidden="true" class="fa fa-university"></span> Albany Campus Library</a>
+  <ul><li>Monday-Thursday 7:30am-9pm</li>
+    <li>Friday 7:30am-5pm</li>
+    <li>Saturday-Sunday 11am-4pm</li></ul>
+</div>
 
-	                                   var t = document.createTextNode(" Open today " + oTimeCiv + '-' + cTimeCiv);       // Create a text node
-	                                   $(elementId).addClass("btn-success");
-	                                   $(elementId).append(t);                                // Append the text to <button>
-	                                   return 0
-	                                 }
-	                               }
-	                             }
-	                           }
-	                             var t = document.createTextNode(' Currently closed; see library hours');
-	                             $(elementId).addClass("btn-danger");
-	                             $(elementId).append(t);
-	                             return 0;
-	                         }
-	                       }
-	                       $( document ).ready(function() {
-	                         apiKey = "AIzaSyDXVbhmf9MdPsUN5osl3tYZcCwbnus0Y4Y";
-	                         $.getJSON(apiUrl('linnbenton.edu_kncbp9oce0ardu7idrt38inl3c@group.calendar.google.com', apiKey), sendHoursToBrowser('#hoc-hours'));
-	                         $.getJSON(apiUrl('linnbenton.edu_un13554vos71aein8m7j285u4c@group.calendar.google.com', apiKey), sendHoursToBrowser('#albany-hours'));
-	                         });
+<div class="col-md-6">
+  <h3>Healthcare Occupations Center Library</h3>
+  <a class="btn" href="http://library.linnbenton.edu/hours#hoc" id="hoc-hours" style="white-space: normal;margin-bottom:8px;"><span aria-hidden="true" class="fa fa-stethoscope"></span> Healthcare Occupations Center Library</a>
+  <ul><li>Monday-Friday 7:30am-4:30pm</li></ul>
+</div>
 
-	                       /* ]]> */
-	</script>
-</body>
+<script type="text/javascript">
+                        function apiUrl(calendarId, apiKey) {
+                          timeMin = new Date().toISOString();
+                          return "https://www.googleapis.com/calendar/v3/calendars/" + calendarId + "/events?key=" + apiKey + "&singleEvents=true&orderBy=startTime&timeMin=" + timeMin;
+                        }
+                        function sendHoursToBrowser(elementId) {
+                          return function(response) {
+                            var events = response.items;
+                            for (var i = 0; i < events.length; i += 1) {
+                              if(events[i].end.hasOwnProperty('dateTime')) {
+                                var start = new Date(events[i].start.dateTime);
+                                var end = new Date(events[i].end.dateTime);
+                                var now = new Date();
+                                if ((end.toDateString() == now.toDateString()) && (now < end)) { // If the day matches and event isn't over
+                                  if ('library open' == events[i].summary.toLowerCase()) {
+                                    if (start.getHours() < 12) {
+                                      var oTimeCiv = start.getHours() + ':' + (start.getMinutes()<10?'0':'') + start.getMinutes() + 'am';
+                                    } else {
+                                      var oTimeCiv = (start.getHours() % 12) + ':' + (start.getMinutes()<10?'0':'') + start.getMinutes() + 'pm';
+                                    }
+                                  
+                                    if (end.getHours() < 12) {
+                                      var cTimeCiv = end.getHours() + ':' +  (end.getMinutes()<10?'0':'') + end.getMinutes() + 'am';
+                                    } else {
+                                      var cTimeCiv = (end.getHours() % 12) + ':' + (end.getMinutes()<10?'0':'')  + end.getMinutes() + 'pm';
+                                    }
+
+                                    if (start > now) { // the event hasn't started yet
+                                      var t = document.createTextNode(" opens today at " + oTimeCiv);       // Create a text node
+                                      $(elementId).addClass("btn-warning");
+                                      $(elementId).append(t);                                // Append the text to <button>
+                                      return 0
+                                    } else {
+                                      var t = document.createTextNode(" open today " + oTimeCiv + '-' + cTimeCiv);       // Create a text node
+                                      $(elementId).addClass("btn-success");
+                                      $(elementId).append(t);                                // Append the text to <button>
+                                      return 0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                              var t = document.createTextNode(' currently closed; see library hours');
+                              $(elementId).addClass("btn-warning");
+                              $(elementId).append(t);
+                              return 0;
+                          }
+                        }
+                        $( document ).ready(function() {
+                          apiKey = "AIzaSyDXVbhmf9MdPsUN5osl3tYZcCwbnus0Y4Y";
+                          $.getJSON(apiUrl('linnbenton.edu_kncbp9oce0ardu7idrt38inl3c@group.calendar.google.com', apiKey), sendHoursToBrowser('#hoc-hours'));
+                          $.getJSON(apiUrl('linnbenton.edu_un13554vos71aein8m7j285u4c@group.calendar.google.com', apiKey), sendHoursToBrowser('#albany-hours'));
+                          });
+
+                        /* ]]> */
+                        </script>
+	</body>
 </html>
