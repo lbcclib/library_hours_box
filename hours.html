@@ -36,13 +36,13 @@
                                     if (start.getHours() < 12) {
                                       var oTimeCiv = start.getHours() + ':' + (start.getMinutes()<10?'0':'') + start.getMinutes() + 'am';
                                     } else {
-                                      var oTimeCiv = (start.getHours() % 12) + ':' + (start.getMinutes()<10?'0':'') + start.getMinutes() + 'pm';
+                                      var oTimeCiv = (start.getHours() == 12 ? 12 : (start.getHours() % 12)) + ':' + (start.getMinutes()<10?'0':'') + start.getMinutes() + 'pm';
                                     }
                                   
                                     if (end.getHours() < 12) {
                                       var cTimeCiv = end.getHours() + ':' +  (end.getMinutes()<10?'0':'') + end.getMinutes() + 'am';
                                     } else {
-                                      var cTimeCiv = (end.getHours() % 12) + ':' + (end.getMinutes()<10?'0':'')  + end.getMinutes() + 'pm';
+                                      var cTimeCiv = (end.getHours() == 12 ? 12 : (end.getHours() % 12)) + ':' + (end.getMinutes()<10?'0':'')  + end.getMinutes() + 'pm';
                                     }
 
                                     if (start > now) { // the event hasn't started yet
